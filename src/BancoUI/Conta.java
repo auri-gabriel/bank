@@ -138,7 +138,12 @@ public class Conta {
      * @param valor
      */
     public void deposita(double valor) {
-        this.saldo += valor;
+        if (valor < 0) {
+            throw new IllegalArgumentException("Valor negativo");
+        } else {
+            this.saldo += valor;
+            System.out.println("Valor depositado!");
+        }
     }
 
     /**
@@ -148,12 +153,15 @@ public class Conta {
      * @param valor Valor a ser sacado.
      * @return True se o saque foi realizado com sucesso e False caso contr�rio.
      */
-    public boolean saca(double valor) {
-        if (valor <= saldo + limite) {
-            saldo -= valor;
-            return true;
+    public void saca(double valor) {
+        if (valor < 0) {
+            if (valor <= saldo + limite) {
+                saldo -= valor;
+            } else {
+                throw new RuntimeException("Saldo insuficiente!");
+            }
         } else {
-            return false;
+            throw new IllegalArgumentException("Valor negativo!");
         }
     }
 

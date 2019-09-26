@@ -94,6 +94,7 @@ public class BancoUI {
                     break;
                 default:
                     System.out.println("Opcao Invalida");
+                    menu();
             }
         } while (opcao != 0);
 
@@ -117,7 +118,7 @@ public class BancoUI {
      * determinada conta e informa ao usu�rio o resultado da opera��o.
      */
     public static void sacar() {
-        boolean operacao;
+        try {
         Scanner input = new Scanner(System.in);
         System.out.println("Informe o numero da conta: ");
         int numero = input.nextInt();
@@ -125,12 +126,12 @@ public class BancoUI {
         double valor = input.nextDouble();
         System.out.print("Informe a senha: ");
         String senha = input.next();
-        operacao = meuBanco.sacar(numero, senha, valor);
-        if (operacao) {
-            System.out.print("Operação realizada com sucesso!");
-        } else {
-            System.out.print("A operação falhou...");
+        meuBanco.sacar(numero, senha, valor);            
+        } catch (IllegalArgumentException containexistente) {
+            containexistente.getMessage();
         }
+
+        
     }
 
     /**
@@ -138,21 +139,20 @@ public class BancoUI {
      * determinada conta e informa ao usu�rio o resultado da opera��o.
      */
     public static void depositar() {
-        boolean operacao;
-        Scanner input = new Scanner(System.in);
-        System.out.println("Informe o numero da conta: ");
-        int numero = input.nextInt();
-        System.out.println("Informe o valor: ");
-        double valor = input.nextDouble();
-        System.out.println("Informe a senha: ");
-        String senha = input.next();
-        operacao = meuBanco.depositar(numero, senha, valor);
-        if (operacao) {
-            System.out.print("Operação realizada com sucesso!");
-        } else {
-            System.out.print("A operação falhou...");
+        try {
+            Scanner input = new Scanner(System.in);
+            System.out.println("Informe o numero da conta: ");
+            int numero = input.nextInt();
+            System.out.println("Informe o valor: ");
+            double valor = input.nextDouble();
+            System.out.println("Informe a senha: ");
+            String senha = input.next();
+            meuBanco.depositar(numero, senha, valor);
+        } catch (IllegalArgumentException containexistente) {
+            containexistente.getMessage();
         }
     }
+    
 
     /**
      * Realiza a leitura dos dados necess�rios para realizar a transfer�ncia
@@ -199,6 +199,12 @@ public class BancoUI {
             System.out.print("Operação realizada com sucesso!");
         } else {
             System.out.print("A operação falhou...");
+        }
+    }
+    
+    public class SaldoInsuficienteException extends RuntimeException{
+        SaldoInsuficienteException(String message){
+            super(message);
         }
     }
 

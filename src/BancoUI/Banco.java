@@ -70,14 +70,14 @@ public class Banco {
      * (número e/ou senha) da conta estejam incorretos ou não é permitido
      * realizar o saque do valor solicitado.
      */
-    public boolean sacar(int numero, String senha, double valor) {
+    public void sacar(int numero, String senha, double valor) throws IllegalArgumentException {
         for (Conta c : contas) {
             if (numero == c.getNumero() && c.isSenhaCorreta(senha)) {
                 c.saca(valor);
-                return true;
+            } else {
+                throw new IllegalArgumentException("Número de conta inexistente");
             }
         }
-        return false;
 
     }
 
@@ -91,14 +91,15 @@ public class Banco {
      * @return True caso o depósito tenha sido realizado e False caso os dados
      * (número e/ou senha) da conta estejam incorretos.
      */
-    public boolean depositar(int numero, String senha, double valor) {
+    public void depositar(int numero, String senha, double valor) throws IllegalArgumentException {
         for (Conta c : contas) {
             if (numero == c.getNumero() && c.isSenhaCorreta(senha)) {
                 c.deposita(valor);
-                return true;
+            }
+            else{
+                throw new IllegalArgumentException("Número de conta inexistente");
             }
         }
-        return false;
     }
 
     /**
